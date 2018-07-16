@@ -3,10 +3,10 @@
 
 #include "TLV.h"
 
-class Name 
+class Name :public TLV
 {
 private:
-  const byte m_Type = 0x30;
+  const byte m_NameType = 0x30;
   BitString m_FN;
   BitString m_SN;
   BitString m_AD;
@@ -14,7 +14,7 @@ private:
   Sequence  m_order;
 
 public:
-  Name() {}
+  Name() :TLV(m_NameType) {}
   ~Name() {}
 
 };

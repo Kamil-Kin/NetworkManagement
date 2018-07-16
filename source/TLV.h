@@ -21,43 +21,44 @@ public:
 class Integer :public TLV
 {
 private:
-  const byte m_Type = 0x02;
+  static const byte m_IntType = 0x02;
 public:
-  Integer() :TLV(m_Type) {} 
+  Integer() :TLV(m_IntType) {} 
   ~Integer() {}
 };
 
 class BitString :public TLV 
 {
 private:
-  const byte m_Type = 0x03;
+  static const byte m_BitStrType = 0x03;
 public:
-  BitString() :TLV(m_Type) {}
+  BitString() :TLV(m_BitStrType) {}
   ~BitString() {}
 };
 
 class OctetString :public TLV 
 {
 private:
-  const byte m_Type = 0x04;
+  static const byte m_OctetStrType = 0x04;
 public:
-  OctetString() :TLV(m_Type) {}
+  OctetString() :TLV(m_OctetStrType) {}
   ~OctetString() {}
 };
 
 class Real :public TLV 
 {
 private:
-  const byte m_Type = 0x09;
+  static const byte m_RealType = 0x09;
 public:
-  Real() :TLV(m_Type) {}
+  Real() :TLV(m_RealType) {}
   ~Real() {}
 };
 
 class Sequence :public TLV 
 {
 private:
-  const byte   m_Type = 0x30;
+  static const byte   m_SeqType = 0x30;
+
   BitString    m_Name;
   const size_t m_NameLength = 20;
   BitString    m_F2;
@@ -71,7 +72,7 @@ private:
   BitString    m_F6;
 
 public:
-  Sequence() :TLV(m_Type) {}
+  Sequence() :TLV(m_SeqType) {}
   ~Sequence() {}
 };
 
