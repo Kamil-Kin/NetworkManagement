@@ -7,15 +7,24 @@
 typedef uint8_t byte;
 
 using std::vector;
-
 class TLV 
 {
-protected:
-  const byte m_Type;
-
 public:
   TLV(byte Type) :m_Type(Type) {}
   ~TLV() {}
+
+  void encodeLength();
+  void encodeTLV();
+  vector<byte> ConvertToBytes();
+
+protected:
+  const byte m_Type;
+
+private:
+  vector<byte> m_Message;
+  vector<byte> m_Length;
+  vector<byte> m_Value;
+
 };
 
 class Integer :public TLV
@@ -57,7 +66,7 @@ public:
 class Sequence :public TLV 
 {
 private:
-  static const byte   m_SeqType = 0x30;
+  static const byte m_SeqType = 0x30;
 
   BitString    m_Name;
   const size_t m_NameLength = 20;

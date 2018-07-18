@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main.cpp" />
+    <ClCompile Include="..\source\TLV.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\Name.h" />
