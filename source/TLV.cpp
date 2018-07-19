@@ -1,17 +1,30 @@
 #include "TLV.h"
+#include <cmath>
+
+using std::ceil;
+using std::log;
+using std::pow;
 
 void TLV::encodeLength()
 {
-  byte NumBytesLen = m_Length.size();
-  if (NumBytesLen <= 127)
-    m_Length.push_back(NumBytesLen);
+  byte NumBytesLength = m_Length.size();
+  if (NumBytesLength <= 127)
+    m_Length.push_back(NumBytesLength);
   else 
   {
-    const int long_form_flag = 0x80;  // 1000 0000
-    //
-    //todo
-    //
-    m_Length.push_back(long_form_flag);
+    const int LongFormFlag = 0x80;  // 1000 0000
+    byte MaxBytes = ceil(log(NumBytesLength));
+    int NumBitsInByte = 8;
+    double ValuesInByte = pow(2.0, NumBitsInByte);
+    int LongFormLengthBytes = MaxBytes / NumBitsInByte;
+    m_Length.push_back(LongFormFlag + LongFormLengthBytes);
+    
+    while (NumBytesLength > 0)
+    {
+      byte ContentBytes = NumBytesLength and ValuesInByte;
+      NumBytesLength /= ValuesInByte;
+      m_Length.push_back(ContentBytes);
+    }
   }
 }
 
