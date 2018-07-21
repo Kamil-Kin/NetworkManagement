@@ -11,7 +11,7 @@ private:
   BitString m_SN;
   BitString m_AD;
   Integer   m_AGE;
-  Sequence  m_order;
+  Struct    m_order;
 
 public:
   Name() :TLV(m_NameType) {}

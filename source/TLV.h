@@ -7,6 +7,8 @@
 typedef uint8_t byte;
 
 using std::vector;
+using std::size_t;
+
 class TLV 
 {
 public:
@@ -15,7 +17,6 @@ public:
 
   void encodeLength();
   void encodeTLV();
-  vector<byte> ConvertToBytes();
 
 protected:
   const byte m_Type;
@@ -30,59 +31,63 @@ private:
 class Integer :public TLV
 {
 private:
-  static const byte m_IntType = 0x02;
+  static const byte m_IntType = 0x02; // Integer type in BER
 public:
   Integer() :TLV(m_IntType) {} 
   ~Integer() {}
+  vector<byte> ValueToBytes(int Value);
 };
 
 class BitString :public TLV 
 {
 private:
-  static const byte m_BitStrType = 0x03;
+  static const byte m_BitStrType = 0x03;  // BitString type in BER
 public:
   BitString() :TLV(m_BitStrType) {}
   ~BitString() {}
+  vector<byte> ValueToBytes(/*todo*/);
 };
 
-class OctetString :public TLV 
+class OctetString :public TLV
 {
 private:
-  static const byte m_OctetStrType = 0x04;
+  static const byte m_OctetStrType = 0x04; // OctetString type in BER
 public:
   OctetString() :TLV(m_OctetStrType) {}
   ~OctetString() {}
+  vector<byte> ValueToBytes(char Value);
 };
 
 class Real :public TLV 
 {
 private:
-  static const byte m_RealType = 0x09;
+  static const byte m_RealType = 0x09; // Real type in BER
 public:
   Real() :TLV(m_RealType) {}
   ~Real() {}
+  vector<byte> ValueToBytes(float Value);
 };
 
-class Sequence :public TLV 
+class Struct :public TLV 
 {
 private:
-  static const byte m_SeqType = 0x30;
+  static const byte m_StructType = 0x30; // Sequence type in BER
 
   BitString    m_Name;
   const size_t m_NameLength = 20;
   BitString    m_F2;
   const size_t m_F2Length = 30;
   Integer      m_F3;
-  const size_t m_F3LengthMin = 0;
-  const size_t m_F3LengthMax = 50;
+  const int    m_F3LengthMin = 0;
+  const int    m_F3LengthMax = 50;
   Real         m_F4;
   OctetString  m_F5;
   const size_t m_F5Length = 60;
-  BitString    m_F6;
+  //   m_F6;??
 
 public:
-  Sequence() :TLV(m_SeqType) {}
-  ~Sequence() {}
+  Struct() :TLV(m_StructType) {}
+  ~Struct() {}
 };
 
 
