@@ -21,57 +21,64 @@ public:
 protected:
   const byte m_Type;
 
-private:
   vector<byte> m_Message;
   vector<byte> m_Length;
   vector<byte> m_Value;
-
 };
 
 class Integer :public TLV
 {
-private:
-  static const byte m_IntType = 0x02; // Integer type in BER
 public:
-  Integer() :TLV(m_IntType) {} 
-  ~Integer() {}
+  Integer(int Value);
+  ~Integer();
   vector<byte> ValueToBytes(int Value);
+
+private:
+  static const byte m_IntType = 0x02;  // Integer type in BER
 };
 
 class BitString :public TLV 
 {
+
+public:
+  BitString();
+  ~BitString();
+  vector<byte> ValueToBytes(/*todo*/);
+
 private:
   static const byte m_BitStrType = 0x03;  // BitString type in BER
-public:
-  BitString() :TLV(m_BitStrType) {}
-  ~BitString() {}
-  vector<byte> ValueToBytes(/*todo*/);
 };
 
 class OctetString :public TLV
 {
-private:
-  static const byte m_OctetStrType = 0x04; // OctetString type in BER
 public:
-  OctetString() :TLV(m_OctetStrType) {}
-  ~OctetString() {}
+  OctetString(char Value);
+  ~OctetString();
   vector<byte> ValueToBytes(char Value);
+
+private:
+  static const byte m_OctetStrType = 0x04;  // OctetString type in BER
 };
 
 class Real :public TLV 
 {
-private:
-  static const byte m_RealType = 0x09; // Real type in BER
 public:
-  Real() :TLV(m_RealType) {}
+  Real(float Value);
   ~Real() {}
   vector<byte> ValueToBytes(float Value);
+
+private:
+  static const byte m_RealType = 0x09;  // Real type in BER
 };
 
 class Struct :public TLV 
 {
+public:
+  Struct();
+  ~Struct() {}
+
 private:
-  static const byte m_StructType = 0x30; // Sequence type in BER
+  static const byte m_StructType = 0x30;  // Sequence type in BER
 
   BitString    m_Name;
   const size_t m_NameLength = 20;
@@ -84,10 +91,6 @@ private:
   OctetString  m_F5;
   const size_t m_F5Length = 60;
   //   m_F6;??
-
-public:
-  Struct() :TLV(m_StructType) {}
-  ~Struct() {}
 };
 
 

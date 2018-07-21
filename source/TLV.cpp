@@ -7,7 +7,7 @@ using std::pow;
 
 void TLV::encodeLength()
 {
-  byte NumOctetsLength = m_Length.size();
+  byte NumOctetsLength = m_Value.size();
 
   if (NumOctetsLength <= 127)
     m_Length.push_back(NumOctetsLength);
@@ -39,62 +39,75 @@ void TLV::encodeTLV()
     m_Message.push_back(m_Value[i]);
 }
 
-Integer::Integer() :TLV(m_IntType) 
+Integer::Integer(int Value) :TLV(m_IntType) 
 {
+  m_Value = ValueToBytes(Value);
   encodeLength();
   encodeTLV();
 }
+Integer::~Integer() {}
 vector<byte> Integer::ValueToBytes(int Value) 
 {
   vector<byte> IntValue;
-  byte NumBytesInValue = sizeof(Value);
-
+  const byte NumBytesInValue = sizeof(Value);
+  byte ValueTab[NumBytesInValue];
 
 
   for (byte i = 0; i < NumBytesInValue; ++i)
-    IntValue.push_back(/*todo*/);
+    IntValue.push_back(ValueTab[i]);
+  return IntValue;
 }
 
 BitString::BitString() :TLV(m_BitStrType) 
 {
+  m_Value = ValueToBytes();
   encodeLength();
   encodeTLV();
 }
+BitString::~BitString() {}
 vector<byte> BitString::ValueToBytes(/*todo*/) 
 {
 
 }
 
-Real::Real() :TLV(m_RealType) 
+Real::Real(float Value) :TLV(m_RealType) 
 {
+  m_Value = ValueToBytes(Value);
   encodeLength();
   encodeTLV();
 }
+Real::~Real() {}
 vector<byte> Real::ValueToBytes(float Value) 
 {
   vector<byte> RealValue;
-
-  byte NumBytesInValue = sizeof(Value);
-
+  const byte NumBytesInValue = sizeof(Value);
+  byte ValueTab[NumBytesInValue];
 
 
   for (byte i = 0; i < NumBytesInValue; ++i)
-    RealValue.push_back(/*todo*/);
+    RealValue.push_back(ValueTab[i]);
+  return RealValue;
 }
 
-OctetString::OctetString() :TLV(m_OctetStrType) 
+OctetString::OctetString(char Value) :TLV(m_OctetStrType) 
 {
+  m_Value = ValueToBytes(Value);
   encodeLength();
   encodeTLV();
 }
+OctetString::~OctetString() {}
 vector<byte> OctetString::ValueToBytes(char Value) 
 {
   vector<byte> OctetStrValue;
-  byte NumBytesInValue = sizeof(Value);
+  const byte NumBytesInValue = sizeof(Value);
+  byte ValueTab[NumBytesInValue];
 
 
 
   for (byte i = 0; i < NumBytesInValue; ++i)
-    OctetStrValue.push_back(/*todo*/);
+    OctetStrValue.push_back(ValueTab[i]);
+  return OctetStrValue;
 }
 
+Struct::Struct() :TLV(m_StructType) {/*todo*/ }
+Struct::~Struct() {}

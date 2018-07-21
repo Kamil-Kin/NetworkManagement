@@ -6,7 +6,8 @@
 class Name :public TLV
 {
 private:
-  const byte m_NameType = 0x30;
+  static const byte m_NameType = 0x30;  // Sequence type in BER
+
   BitString m_FN;
   BitString m_SN;
   BitString m_AD;
@@ -14,9 +15,10 @@ private:
   Struct    m_order;
 
 public:
-  Name() :TLV(m_NameType) {}
-  ~Name() {}
+  Name();
+  ~Name();
 
+  vector<byte> ValueToBytes();
 };
 
 #endif // !NETWORK_MANAGEMENT_NAME_H
