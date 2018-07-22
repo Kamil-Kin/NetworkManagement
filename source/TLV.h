@@ -17,6 +17,7 @@ public:
 
   void encodeLength();
   void encodeTLV();
+  vector<byte> GetMessage() { return m_Message; }
 
 protected:
   const byte m_Type;
@@ -82,12 +83,14 @@ private:
   static const byte m_ElemType = 0x30;  // Sequence type in BER
 };
 
-class Struct :public TLV 
+class Order :public TLV 
 {
 public:
-  Struct();
-  ~Struct();
-  vector<byte> StructToBytes();
+  Order();
+  ~Order();
+  vector<byte> OrderToBytes();
+  void AddToOrder(vector<byte> &Order, vector<byte> &Field);
+
 private:
   static const byte m_StructType = 0x30;  // Sequence type in BER
 
@@ -105,7 +108,6 @@ private:
   //F4?
   const size_t m_F5Length    = 60;
 };
-
 
 
 #endif // !NETWORK_MANAGEMENT_TLV_H

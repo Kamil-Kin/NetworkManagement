@@ -120,22 +120,33 @@ Elem::~Elem() {}
 vector<byte> Elem::ValueToBytes(vector<Integer> Value)
 {
   vector<byte> ElemValue;
-  //todo
-
+  for (int i = 0; i < Value.size(); ++i) 
+  {
+    Real temp = Real(i);
+    vector<byte> TempValue = temp.GetMessage();
+    ElemValue.insert(ElemValue.end(), TempValue.begin(), TempValue.end());
+  }
   return ElemValue;
 }
 
-Struct::Struct() :TLV(m_StructType) 
+Order::Order() :TLV(m_StructType) 
 {
-  m_Value = StructToBytes();
+  m_Value = OrderToBytes();
   encodeLength();
   encodeTLV();
 }
-Struct::~Struct() {}
+Order::~Order() {}
 
-vector<byte> Struct::StructToBytes() 
+vector<byte> Order::OrderToBytes() 
 {
-  vector<byte> StructValue;
-  //todo
-  return StructValue;
+  vector<byte> OrderValue;
+  
+
+
+  return OrderValue;
+}
+void Order::AddToOrder(vector<byte> &OrderValue, vector<byte> &FieldValue)
+{
+   OrderValue.insert(OrderValue.end(), FieldValue.begin(), FieldValue.end());
+   //return NameValue; http://cpp.sh/2knz
 }

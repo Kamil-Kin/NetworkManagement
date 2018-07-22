@@ -13,7 +13,6 @@ vector<byte> Name::ValueToBytes()
 {
   vector<byte> NameValue;
 
-  /*todo*/
 
   return NameValue;
 }

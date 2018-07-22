@@ -5,6 +5,13 @@
 
 class Name :public TLV
 {
+public:
+  Name();
+  ~Name();
+
+  vector<byte> ValueToBytes();
+  void         SaveToFile();
+
 private:
   static const byte m_NameType = 0x30;  // Sequence type in BER
 
@@ -12,15 +19,9 @@ private:
   BitString m_SN;
   BitString m_AD;
   Integer   m_AGE;
-  Struct    m_order;
+  Order     m_STRUCT;
 
-public:
-  Name();
-  ~Name();
-
-  vector<byte> ValueToBytes();
-
-  void SaveToFile();
 };
+
 
 #endif // !NETWORK_MANAGEMENT_NAME_H
