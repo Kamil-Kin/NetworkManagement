@@ -64,34 +64,48 @@ class Real :public TLV
 {
 public:
   Real(float Value);
-  ~Real() {}
+  ~Real();
   vector<byte> ValueToBytes(float Value);
 
 private:
   static const byte m_RealType = 0x09;  // Real type in BER
 };
 
+class Elem :public TLV
+{
+public:
+  Elem(vector<Integer> Value);
+  ~Elem();
+  vector<byte> ValueToBytes(vector<Integer> Value);
+
+private:
+  static const byte m_ElemType = 0x30;  // Sequence type in BER
+};
+
 class Struct :public TLV 
 {
 public:
   Struct();
-  ~Struct() {}
-
+  ~Struct();
+  vector<byte> StructToBytes();
 private:
   static const byte m_StructType = 0x30;  // Sequence type in BER
 
   BitString    m_Name;
-  const size_t m_NameLength = 20;
   BitString    m_F2;
-  const size_t m_F2Length = 30;
   Integer      m_F3;
-  const int    m_F3LengthMin = 0;
-  const int    m_F3LengthMax = 50;
   Real         m_F4;
   OctetString  m_F5;
-  const size_t m_F5Length = 60;
-  //   m_F6;??
+  Elem         m_F6;
+
+  const size_t m_NameLength  = 20;
+  const size_t m_F2Length    = 30;
+  const int    m_F3LengthMin = 0;
+  const int    m_F3LengthMax = 50;
+  //F4?
+  const size_t m_F5Length    = 60;
 };
+
 
 
 #endif // !NETWORK_MANAGEMENT_TLV_H

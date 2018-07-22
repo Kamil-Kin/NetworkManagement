@@ -19,6 +19,8 @@ public:
   ~Name();
 
   vector<byte> ValueToBytes();
+
+  void SaveToFile();
 };
 
 #endif // !NETWORK_MANAGEMENT_NAME_H

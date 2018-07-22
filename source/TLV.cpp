@@ -50,7 +50,8 @@ vector<byte> Integer::ValueToBytes(int Value)
 {
   vector<byte> IntValue;
   const byte NumBytesInValue = sizeof(Value);
-  byte ValueTab[NumBytesInValue];
+  vector<byte> ValueTab;
+
 
 
   for (byte i = 0; i < NumBytesInValue; ++i)
@@ -109,5 +110,32 @@ vector<byte> OctetString::ValueToBytes(char Value)
   return OctetStrValue;
 }
 
-Struct::Struct() :TLV(m_StructType) {/*todo*/ }
+Elem::Elem(vector<Integer> Value) :TLV(m_ElemType) 
+{
+  m_Value = ValueToBytes(Value);
+  encodeLength();
+  encodeTLV();
+}
+Elem::~Elem() {}
+vector<byte> Elem::ValueToBytes(vector<Integer> Value)
+{
+  vector<byte> ElemValue;
+  //todo
+
+  return ElemValue;
+}
+
+Struct::Struct() :TLV(m_StructType) 
+{
+  m_Value = StructToBytes();
+  encodeLength();
+  encodeTLV();
+}
 Struct::~Struct() {}
+
+vector<byte> Struct::StructToBytes() 
+{
+  vector<byte> StructValue;
+  //todo
+  return StructValue;
+}
