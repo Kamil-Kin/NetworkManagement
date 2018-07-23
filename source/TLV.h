@@ -86,7 +86,7 @@ private:
 class Order :public TLV 
 {
 public:
-  Order();
+  Order(BitString Name, BitString F2, Integer F3, Real F4, OctetString F5, Elem F6);
   ~Order();
   vector<byte> OrderToBytes();
   void AddToOrder(vector<byte> &Order, vector<byte> &Field);

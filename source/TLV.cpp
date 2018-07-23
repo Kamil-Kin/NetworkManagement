@@ -68,7 +68,9 @@ BitString::BitString() :TLV(m_BitStrType)
 BitString::~BitString() {}
 vector<byte> BitString::ValueToBytes(/*todo*/) 
 {
-
+  vector<byte> BitStrValue;
+  //todo
+  return BitStrValue;
 }
 
 Real::Real(float Value) :TLV(m_RealType) 
@@ -129,7 +131,8 @@ vector<byte> Elem::ValueToBytes(vector<Integer> Value)
   return ElemValue;
 }
 
-Order::Order() :TLV(m_StructType) 
+Order::Order(BitString Name, BitString F2,Integer F3, Real F4, OctetString F5, Elem F6) :
+            TLV(m_StructType), m_Name(Name), m_F2(F2), m_F3(F3), m_F4(F4), m_F5(F5), m_F6(F6)
 {
   m_Value = OrderToBytes();
   encodeLength();
@@ -140,8 +143,14 @@ Order::~Order() {}
 vector<byte> Order::OrderToBytes() 
 {
   vector<byte> OrderValue;
-  
+  vector<byte> FieldValue;
 
+  FieldValue = m_Name.GetMessage(); AddToOrder(OrderValue, FieldValue);
+  FieldValue = m_F2.GetMessage();   AddToOrder(OrderValue, FieldValue);
+  FieldValue = m_F3.GetMessage();   AddToOrder(OrderValue, FieldValue);
+  FieldValue = m_F4.GetMessage();   AddToOrder(OrderValue, FieldValue);
+  FieldValue = m_F5.GetMessage();   AddToOrder(OrderValue, FieldValue);
+  FieldValue = m_F6.GetMessage();   AddToOrder(OrderValue, FieldValue);
 
   return OrderValue;
 }

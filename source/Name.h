@@ -15,11 +15,11 @@ public:
 private:
   static const byte m_NameType = 0x30;  // Sequence type in BER
 
-  BitString m_FN;
-  BitString m_SN;
-  BitString m_AD;
-  Integer   m_AGE;
-  Order     m_STRUCT;
+  BitString* m_FN;
+  BitString* m_SN;
+  BitString* m_AD;
+  Integer*   m_AGE;
+  Order*     m_STRUCT;
 
 };
 

@@ -6,7 +6,14 @@ using std::fstream;
 using std::ios;
 
 
-Name::Name() :TLV(m_NameType) {/*todo*/ }
+Name::Name() :TLV(m_NameType)
+{
+  m_FN     = NULL;
+  m_SN     = NULL;
+  m_AD     = NULL;
+  m_AGE    = NULL;
+  m_STRUCT = NULL;
+}
 Name::~Name() {}
 
 vector<byte> Name::ValueToBytes() 
