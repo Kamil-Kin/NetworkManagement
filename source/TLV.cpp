@@ -4,6 +4,7 @@
 using std::ceil;
 using std::log;
 using std::pow;
+using std::memcpy;
 
 void TLV::encodeLength()
 {
@@ -50,9 +51,9 @@ vector<byte> Integer::ValueToBytes(int Value)
 {
   vector<byte> IntValue;
   const byte NumBytesInValue = sizeof(Value);
-  vector<byte> ValueTab;
+  byte ValueTab[NumBytesInValue];
 
-
+  memcpy(ValueTab, &Value, NumBytesInValue);
 
   for (byte i = 0; i < NumBytesInValue; ++i)
     IntValue.push_back(ValueTab[i]);
@@ -85,7 +86,8 @@ vector<byte> Real::ValueToBytes(float Value)
   vector<byte> RealValue;
   const byte NumBytesInValue = sizeof(Value);
   byte ValueTab[NumBytesInValue];
-
+  
+  memcpy(ValueTab, &Value, NumBytesInValue);
 
   for (byte i = 0; i < NumBytesInValue; ++i)
     RealValue.push_back(ValueTab[i]);
@@ -99,13 +101,13 @@ OctetString::OctetString(char Value) :TLV(m_OctetStrType)
   encodeTLV();
 }
 OctetString::~OctetString() {}
-vector<byte> OctetString::ValueToBytes(char Value) 
+vector<byte> OctetString::ValueToBytes(char* Value) 
 {
   vector<byte> OctetStrValue;
-  const byte NumBytesInValue = sizeof(Value);
-  byte ValueTab[NumBytesInValue];
+  const byte NumBytesInValue = strlen(Value);
+  byte* ValueTab = new byte[NumBytesInValue];
 
-
+  memcpy(ValueTab, Value, NumBytesInValue);
 
   for (byte i = 0; i < NumBytesInValue; ++i)
     OctetStrValue.push_back(ValueTab[i]);

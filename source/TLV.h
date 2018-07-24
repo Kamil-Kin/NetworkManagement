@@ -55,7 +55,7 @@ class OctetString :public TLV
 public:
   OctetString(char Value);
   ~OctetString();
-  vector<byte> ValueToBytes(char Value);
+  vector<byte> ValueToBytes(char* Value);
 
 private:
   static const byte m_OctetStrType = 0x04;  // OctetString type in BER
