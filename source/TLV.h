@@ -53,7 +53,7 @@ private:
 class OctetString :public TLV
 {
 public:
-  OctetString(char Value);
+  OctetString(char* Value);
   ~OctetString();
   vector<byte> ValueToBytes(char* Value);
 

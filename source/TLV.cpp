@@ -1,5 +1,6 @@
 #include "TLV.h"
 #include <cmath>
+#include <cstring>
 
 using std::ceil;
 using std::log;
@@ -51,7 +52,7 @@ vector<byte> Integer::ValueToBytes(int Value)
 {
   vector<byte> IntValue;
   const byte NumBytesInValue = sizeof(Value);
-  byte ValueTab[NumBytesInValue];
+  char ValueTab[NumBytesInValue];
 
   memcpy(ValueTab, &Value, NumBytesInValue);
 
@@ -85,7 +86,7 @@ vector<byte> Real::ValueToBytes(float Value)
 {
   vector<byte> RealValue;
   const byte NumBytesInValue = sizeof(Value);
-  byte ValueTab[NumBytesInValue];
+  char ValueTab[NumBytesInValue];
   
   memcpy(ValueTab, &Value, NumBytesInValue);
 
@@ -94,7 +95,7 @@ vector<byte> Real::ValueToBytes(float Value)
   return RealValue;
 }
 
-OctetString::OctetString(char Value) :TLV(m_OctetStrType) 
+OctetString::OctetString(char* Value) :TLV(m_OctetStrType) 
 {
   m_Value = ValueToBytes(Value);
   encodeLength();
@@ -105,7 +106,7 @@ vector<byte> OctetString::ValueToBytes(char* Value)
 {
   vector<byte> OctetStrValue;
   const byte NumBytesInValue = strlen(Value);
-  byte* ValueTab = new byte[NumBytesInValue];
+  char* ValueTab = new char[NumBytesInValue];
 
   memcpy(ValueTab, Value, NumBytesInValue);
 
