@@ -10,6 +10,7 @@ public:
   ~Name();
 
   vector<byte> ValueToBytes();
+  void         LoadValuesFromFile();
   void         SaveToFile();
 
 private:

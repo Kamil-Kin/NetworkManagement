@@ -2,7 +2,8 @@
 #include <fstream>
 #include <iostream>
 
-using std::fstream;
+using std::ifstream;
+using std::ofstream;
 using std::ios;
 
 
@@ -24,9 +25,22 @@ vector<byte> Name::ValueToBytes()
   return NameValue;
 }
 
+void Name::LoadValuesFromFile() 
+{
+  ifstream file;
+  file.open("InputData.txt");
+  if (file.good() == true) 
+  {
+
+
+    file.close();
+  }
+  else std::cout << "Nie uzyskano dostepu do pliku" << std::endl;
+}
+
 void Name::SaveToFile() 
 {
-  fstream file;
+  ofstream file;
   file.open("BERMessage.txt", ios::out | ios::trunc);
 
   if (file.good() == true) 
