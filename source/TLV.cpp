@@ -9,25 +9,25 @@ using std::memcpy;
 
 void TLV::encodeLength()
 {
-  byte NumOctetsLength = m_Value.size();
+  byte NumBytesLength = m_Value.size();
 
-  if (NumOctetsLength <= 127)
-    m_Length.push_back(NumOctetsLength);
+  if (NumBytesLength <= 127)
+    m_Length.push_back(NumBytesLength);
   else 
   {
     const int LongFormFlag = 0x80;  // 1000 0000
     
-    byte NumBitsInOctet = 8;
-    byte LongFormLengthBytes = ceil(log2(NumOctetsLength)/NumBitsInOctet);
+    byte NumBitsInByte = 8;
+    byte LongFormLengthBytes = ceil(log2(NumBytesLength)/NumBitsInByte);
     
     m_Length.push_back(LongFormFlag + LongFormLengthBytes);
     
-    double ValuesInOctet = pow(2.0, NumBitsInOctet);
-    while (NumOctetsLength > 0)
+    double ValuesInByte = pow(2.0, NumBitsInByte);
+    while (NumBytesLength > 0)
     {
-      byte ContentOctets = NumOctetsLength and ValuesInOctet;
-      NumOctetsLength /= ValuesInOctet;
-      m_Length.push_back(ContentOctets);
+      byte ContentBytes = NumBytesLength and ValuesInByte;
+      NumBytesLength /= ValuesInByte;
+      m_Length.push_back(ContentBytes);
     }
   }
 }
@@ -61,17 +61,31 @@ vector<byte> Integer::ValueToBytes(int Value)
   return IntValue;
 }
 
-BitString::BitString() :TLV(m_BitStrType) 
+BitString::BitString(vector<byte> Value) :TLV(m_BitStrType)
 {
-  m_Value = ValueToBytes();
+  m_Value = ValueToBytes(Value);
   encodeLength();
   encodeTLV();
 }
 BitString::~BitString() {}
-vector<byte> BitString::ValueToBytes(/*todo*/) 
+vector<byte> BitString::ValueToBytes(vector<byte> Value) 
 {
   vector<byte> BitStrValue;
-  //todo
+
+  const byte NumBitsInByte = 8;
+  byte NumBytesInValue = ceil(Value.size() / NumBitsInByte);
+  
+  for (byte i = 0; i < NumBytesInValue; i--) 
+  {
+    byte tmpVal = 0;
+    for (byte j = NumBitsInByte - 1; j >= 0; j--)
+    {
+      int ValueOfBit = Value[i * NumBitsInByte + (NumBitsInByte - j - 1)] and 0xFF;
+      tmpVal += ValueOfBit * pow(2.0, j);
+    }
+    BitStrValue.push_back(tmpVal);
+  }
+
   return BitStrValue;
 }
 

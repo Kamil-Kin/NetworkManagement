@@ -1,0 +1,12 @@
+# NAME
+FN	:
+SN	:
+AD	:
+AGE	:
+# STRUCT
+Name:
+F2	:
+F3	:
+F4	:
+F5	:
+F6	:

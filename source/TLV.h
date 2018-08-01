@@ -42,9 +42,9 @@ class BitString :public TLV
 {
 
 public:
-  BitString();
+  BitString(vector<byte> Value);
   ~BitString();
-  vector<byte> ValueToBytes(/*todo*/);
+  vector<byte> ValueToBytes(vector<byte> Value);
 
 private:
   static const byte m_BitStrType = 0x03;  // BitString type in BER
