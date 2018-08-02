@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Name.h"
 
 using std::cin;

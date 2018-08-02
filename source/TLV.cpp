@@ -1,6 +1,5 @@
 #include "TLV.h"
 #include <cmath>
-#include <cstring>
 
 using std::ceil;
 using std::log;
@@ -25,7 +24,7 @@ void TLV::encodeLength()
     double ValuesInByte = pow(2.0, NumBitsInByte);
     while (NumBytesLength > 0)
     {
-      byte ContentBytes = NumBytesLength and ValuesInByte;
+      byte ContentBytes = NumBytesLength bitand static_cast<byte>(ValuesInByte);
       NumBytesLength /= ValuesInByte;
       m_Length.push_back(ContentBytes);
     }
@@ -61,26 +60,40 @@ vector<byte> Integer::ValueToBytes(int Value)
   return IntValue;
 }
 
-BitString::BitString(vector<byte> Value) :TLV(m_BitStrType)
+BitString::BitString(string Value) :TLV(m_BitStrType)
 {
   m_Value = ValueToBytes(Value);
   encodeLength();
   encodeTLV();
 }
 BitString::~BitString() {}
-vector<byte> BitString::ValueToBytes(vector<byte> Value) 
+vector<byte> BitString::ValueToBytes(string Value) 
 {
   vector<byte> BitStrValue;
 
   const byte NumBitsInByte = 8;
   byte NumBytesInValue = ceil(Value.size() / NumBitsInByte);
   
-  for (byte i = 0; i < NumBytesInValue; i--) 
+  string str0 = "0";
+  string str1 = "1";
+  string str_ = "23456789";
+
+  size_t first_ = Value.find_first_of(str_);
+  size_t last_ = Value.find_last_of(str_);
+
+  do
+  {
+    first_ = Value.find_first_of(str_);
+    Value.replace(first_, str1.length(), str1);
+  } while (first_ < last_);
+
+  //cpp.sh/3hson
+  for (byte i = 0; i < NumBytesInValue; ++i) 
   {
     byte tmpVal = 0;
-    for (byte j = NumBitsInByte - 1; j >= 0; j--)
+    for (byte j = NumBitsInByte - 1; j >= 0; --j)
     {
-      int ValueOfBit = Value[i * NumBitsInByte + (NumBitsInByte - j - 1)] and 0xFF;
+      int ValueOfBit = Value[i * NumBitsInByte + (NumBitsInByte - 1 - j)] bitand 0xFF;
       tmpVal += ValueOfBit * pow(2.0, j);
     }
     BitStrValue.push_back(tmpVal);

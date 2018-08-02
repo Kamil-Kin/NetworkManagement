@@ -3,9 +3,13 @@
 
 #include <vector>
 #include <cstdint>
+#include <string>
+#include <iostream>
+#include <cstring>
 
 typedef uint8_t byte;
 
+using std::string;
 using std::vector;
 using std::size_t;
 
@@ -42,9 +46,9 @@ class BitString :public TLV
 {
 
 public:
-  BitString(vector<byte> Value);
+  BitString(string Value);
   ~BitString();
-  vector<byte> ValueToBytes(vector<byte> Value);
+  vector<byte> ValueToBytes(string Value);
 
 private:
   static const byte m_BitStrType = 0x03;  // BitString type in BER

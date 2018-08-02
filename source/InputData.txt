@@ -1,12 +1,10 @@
-# NAME
-FN	:
-SN	:
-AD	:
-AGE	:
-# STRUCT
-Name:
-F2	:
-F3	:
-F4	:
-F5	:
-F6	:
+FN	:123 #
+SN	:456 #
+AD	:789 #
+AGE	:13 #
+Name	:kamil #
+F2	:f2f2f2f3 #
+F3	:30 #
+F4	:45.5 #
+F5	:kacper #
+F6	:5555 #
