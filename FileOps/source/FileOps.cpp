@@ -12,14 +12,15 @@ void SaveToFile();
 int main()
 {
   LoadFromFile();
+  SaveToFile();
   system("pause");
   return 0;
 }
 
 void LoadFromFile()
 {
-  ifstream file;
   string fn, sn, ad, age, name, f2, f3, f4, f5, f6;
+  ifstream file;
   file.open("InputData.txt");
   if (file.good())
   {
@@ -32,13 +33,11 @@ void LoadFromFile()
   else cout << "Nie uzyskano dostepu do pliku\n";
 }
 
-string LoadLine(ifstream& file, string str) 
+string LoadLine(ifstream& file, string str)
 {
-  getline(file, str, '#');
-  //cout << str << endl;
+  getline(file, str, '#');  //cout << str << endl;
   size_t str_begin = str.find_first_of(":");
-  str.erase(0, str_begin + 1);
-  //cout << str << endl;
+  str.erase(0, str_begin + 1);  //cout << str << endl;
   return str;
 }
 
@@ -48,6 +47,7 @@ void SaveToFile()
   file.open("OutputData.txt", ios::trunc);
   if (file.good())
   {
+    file << "blabalba";
     file.close();
   }
   else cout << "Nie uzyskano dostepu do pliku\n";

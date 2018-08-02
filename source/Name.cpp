@@ -34,37 +34,35 @@ void Name::AddToName(vector<byte> &NameValue, vector<byte> &FieldValue)
 
 void Name::LoadValuesFromFile() 
 {
-  ifstream file;
-  file.open("InputData.txt");
-  if (file.good() == true) 
+  ifstream infile;
+  infile.open("InputData.txt");
+  if (infile.good() == true) 
   {
 
-
-    file.close();
+    infile.close();
   }
   else std::cout << "Nie uzyskano dostepu do pliku" << std::endl;
 }
 
 string Name::LoadLineFromFile(ifstream& file, string str)
 {
-  getline(file, str, '#');
-  //std::cout << str << std::endl;
+  getline(file, str, '#');  //std::cout << str << std::endl;
   size_t str_begin = str.find_first_of(":");
-  str.erase(0, str_begin + 1);
-  //std::cout << str << std::endl;
+  str.erase(0, str_begin + 1);  //std::cout << str << std::endl;
   return str;
 }
 
 void Name::SaveToFile() 
 {
-  ofstream file;
-  file.open("BERMessage.txt", ios::out | ios::trunc);
+  ofstream outfile;
+  outfile.open("BERMessage.txt", ios::out | ios::trunc);
 
-  if (file.good() == true) 
+  if (outfile.good() == true) 
   { 
+    for (byte i = 0; i < m_Message.size(); ++i)
+      outfile << m_Message[i];
 
-
-    file.close(); 
+    outfile.close(); 
   }
   else std::cout << "Nie uzyskano dostepu do pliku" << std::endl;
 }
