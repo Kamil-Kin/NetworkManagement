@@ -122,14 +122,14 @@ vector<byte> Real::ValueToBytes(float Value)
   return RealValue;
 }
 
-OctetString::OctetString(char* Value) :TLV(m_OctetStrType) 
+OctetString::OctetString(const char* Value) :TLV(m_OctetStrType) 
 {
   m_Value = ValueToBytes(Value);
   encodeLength();
   encodeTLV();
 }
 OctetString::~OctetString() {}
-vector<byte> OctetString::ValueToBytes(char* Value) 
+vector<byte> OctetString::ValueToBytes(const char* Value) 
 {
   vector<byte> OctetStrValue;
   const byte NumBytesInValue = strlen(Value);
@@ -142,14 +142,14 @@ vector<byte> OctetString::ValueToBytes(char* Value)
   return OctetStrValue;
 }
 
-Elem::Elem(vector<Integer> Value) :TLV(m_ElemType) 
+Elem::Elem(vector<int> Value) :TLV(m_ElemType) 
 {
   m_Value = ValueToBytes(Value);
   encodeLength();
   encodeTLV();
 }
 Elem::~Elem() {}
-vector<byte> Elem::ValueToBytes(vector<Integer> Value)
+vector<byte> Elem::ValueToBytes(vector<int> Value)
 {
   vector<byte> ElemValue;
   for (int i = 0; i < Value.size(); ++i) 
@@ -161,9 +161,9 @@ vector<byte> Elem::ValueToBytes(vector<Integer> Value)
   return ElemValue;
 }
 
-Order::Order(BitString Name, BitString F2,Integer F3, Real F4, OctetString F5, Elem F6) :
-            TLV(m_StructType), m_Name(Name), m_F2(F2), m_F3(F3), m_F4(F4), m_F5(F5), m_F6(F6)
-{
+Order::Order(string Name, string F2, int F3, float F4, string F5, vector<int> F6) :
+            TLV(m_StructType), m_Name(Name), m_F2(F2), m_F3(F3), m_F4(F4), m_F5(F5.c_str()), m_F6(F6)
+{//todo
   m_Value = OrderToBytes();
   encodeLength();
   encodeTLV();

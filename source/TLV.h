@@ -57,9 +57,9 @@ private:
 class OctetString :public TLV
 {
 public:
-  OctetString(char* Value);
+  OctetString(const char* Value);
   ~OctetString();
-  vector<byte> ValueToBytes(char* Value);
+  vector<byte> ValueToBytes(const char* Value);
 
 private:
   static const byte m_OctetStrType = 0x04;  // OctetString type in BER
@@ -79,9 +79,9 @@ private:
 class Elem :public TLV
 {
 public:
-  Elem(vector<Integer> Value);
+  Elem(vector<int> Value);
   ~Elem();
-  vector<byte> ValueToBytes(vector<Integer> Value);
+  vector<byte> ValueToBytes(vector<int> Value);
 
 private:
   static const byte m_ElemType = 0x30;  // Sequence type in BER
@@ -90,7 +90,7 @@ private:
 class Order :public TLV 
 {
 public:
-  Order(BitString Name, BitString F2, Integer F3, Real F4, OctetString F5, Elem F6);
+  Order(string Name, string F2, int F3, float F4, string F5, vector<int> F6);
   ~Order();
   vector<byte> OrderToBytes();
   void AddToOrder(vector<byte> &Order, vector<byte> &Field);
@@ -98,7 +98,7 @@ public:
 private:
   static const byte m_StructType = 0x30;  // Sequence type in BER
 
-  BitString    m_Name;
+  BitString    m_Name;  //todo BitString czy OctetString?
   BitString    m_F2;
   Integer      m_F3;
   Real         m_F4;
