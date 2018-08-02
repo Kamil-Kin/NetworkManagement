@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NetworkManagement", "make.visual.2017.vcxproj", "{7C9A5112-020A-4915-A3E3-6EE2CFFCE436}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NetworkManagement", "make.visual\make.visual.2017.vcxproj", "{7C9A5112-020A-4915-A3E3-6EE2CFFCE436}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileOps", "FileOps\FileOps.vcxproj", "{AFC50A1B-AE29-41D1-A009-2B4772F574EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{7C9A5112-020A-4915-A3E3-6EE2CFFCE436}.Release|x64.Build.0 = Release|x64
 		{7C9A5112-020A-4915-A3E3-6EE2CFFCE436}.Release|x86.ActiveCfg = Release|Win32
 		{7C9A5112-020A-4915-A3E3-6EE2CFFCE436}.Release|x86.Build.0 = Release|Win32
+		{AFC50A1B-AE29-41D1-A009-2B4772F574EE}.Debug|x64.ActiveCfg = Debug|x64
+		{AFC50A1B-AE29-41D1-A009-2B4772F574EE}.Debug|x64.Build.0 = Debug|x64
+		{AFC50A1B-AE29-41D1-A009-2B4772F574EE}.Debug|x86.ActiveCfg = Debug|Win32
+		{AFC50A1B-AE29-41D1-A009-2B4772F574EE}.Debug|x86.Build.0 = Debug|Win32
+		{AFC50A1B-AE29-41D1-A009-2B4772F574EE}.Release|x64.ActiveCfg = Release|x64
+		{AFC50A1B-AE29-41D1-A009-2B4772F574EE}.Release|x64.Build.0 = Release|x64
+		{AFC50A1B-AE29-41D1-A009-2B4772F574EE}.Release|x86.ActiveCfg = Release|Win32
+		{AFC50A1B-AE29-41D1-A009-2B4772F574EE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
