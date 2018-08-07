@@ -15,7 +15,8 @@ public:
   vector<byte> ValueToBytes();
   void         AddToName(vector<byte> &Name, vector<byte> &Field);
   void         LoadValuesFromFile();
-  string       LoadLineFromFile(ifstream& file, string name);
+  string       LoadLine(ifstream& file);
+  vector<int>  LoadElem(ifstream& file);
   void         SaveToFile();
 
 private:

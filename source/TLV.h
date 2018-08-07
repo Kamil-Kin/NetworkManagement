@@ -19,9 +19,9 @@ public:
   TLV(byte Type) :m_Type(Type) {}
   ~TLV() {}
 
-  void encodeLength();
-  void encodeTLV();
-  vector<byte> GetMessage() { return m_Message; }
+  void         encodeLength();
+  void         encodeTLV   ();
+  vector<byte> GetMessage  () { return m_Message; }
 
 protected:
   const byte m_Type;
@@ -94,8 +94,8 @@ public:
   Order(string Name, string F2, int F3, float F4, string F5, vector<int> F6);
   ~Order();
   vector<byte> OrderToBytes();
-  void AddToOrder(vector<byte> &Order, vector<byte> &Field);
-
+  void         AddToOrder  (vector<byte> &Order, vector<byte> &Field);
+  void         CheckSize   (string Name, string f2, int f3, string f5);
 private:
   static const byte m_StructType = 0x30;  // Sequence type in BER
 

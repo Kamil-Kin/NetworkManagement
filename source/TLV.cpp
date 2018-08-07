@@ -1,5 +1,6 @@
 #include "TLV.h"
 #include <cmath>
+#include <cassert>
 
 using std::ceil;
 using std::log;
@@ -169,7 +170,8 @@ vector<byte> Elem::ValueToBytes(vector<int> Value)
 
 Order::Order(string Name, string F2, int F3, float F4, string F5, vector<int> F6) :
             TLV(m_StructType), m_Name(Name.c_str()), m_F2(F2.c_str()), m_F3(F3), m_F4(F4), m_F5(F5.c_str()), m_F6(F6)
-{//todo
+{
+  //CheckSize(Name, F2, F3, F5);//todo
   m_Value = OrderToBytes();
   encodeLength();
   encodeTLV();
@@ -194,4 +196,15 @@ void Order::AddToOrder(vector<byte> &OrderValue, vector<byte> &FieldValue)
 {
    OrderValue.insert(OrderValue.end(), FieldValue.begin(), FieldValue.end());
    //return NameValue; http://cpp.sh/2knz
+}
+void Order::CheckSize(string Name, string f2, int f3, string f5) 
+{
+  assert 
+  (
+    Name.size() == m_NameLength 
+    || f2.size() == m_F2Length 
+    || f3 <= m_F3LengthMax 
+    || f3 >= m_F3LengthMin 
+    || f5.size() == m_F5Length
+  );
 }

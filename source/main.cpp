@@ -7,6 +7,7 @@ int main()
 {
 
   Name* name = new Name();
+  name->LoadValuesFromFile();
   name->SaveToFile();
 
   cin.get();
