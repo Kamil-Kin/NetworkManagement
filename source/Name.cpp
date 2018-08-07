@@ -10,6 +10,10 @@ Name::Name() :TLV(m_NameType)
   m_AD     = NULL;
   m_AGE    = NULL;
   m_STRUCT = NULL;
+
+  m_Value = ValueToBytes(); //todo
+  encodeLength();
+  encodeTLV();
 }
 Name::~Name() {}
 
@@ -35,7 +39,7 @@ void Name::AddToName(vector<byte> &NameValue, vector<byte> &FieldValue)
 void Name::LoadValuesFromFile() 
 {
   ifstream infile;
-  infile.open("InputData.txt");
+  infile.open("InputMessage.txt");
   if (infile.good() == true) 
   {
 
@@ -44,8 +48,9 @@ void Name::LoadValuesFromFile()
   else std::cout << "Nie uzyskano dostepu do pliku" << std::endl;
 }
 
-string Name::LoadLineFromFile(ifstream& file, string str)
+string Name::LoadLineFromFile(ifstream& file, string name)  //todo
 {
+  string str;
   getline(file, str, '#');  //std::cout << str << std::endl;
   size_t str_begin = str.find_first_of(":");
   str.erase(0, str_begin + 1);  //std::cout << str << std::endl;

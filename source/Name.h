@@ -15,17 +15,17 @@ public:
   vector<byte> ValueToBytes();
   void         AddToName(vector<byte> &Name, vector<byte> &Field);
   void         LoadValuesFromFile();
-  string       LoadLineFromFile(ifstream& file, string str);
+  string       LoadLineFromFile(ifstream& file, string name);
   void         SaveToFile();
 
 private:
   static const byte m_NameType = 0x30;  // Sequence type in BER
 
-  BitString* m_FN;
-  BitString* m_SN;
-  BitString* m_AD;
-  Integer*   m_AGE;
-  Order*     m_STRUCT;
+  OctetString* m_FN;
+  OctetString* m_SN;
+  OctetString* m_AD;
+  Integer*     m_AGE;
+  Order*       m_STRUCT;
 
 };
 

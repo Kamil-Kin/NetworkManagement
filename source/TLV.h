@@ -58,6 +58,7 @@ class OctetString :public TLV
 {
 public:
   OctetString(const char* Value);
+  OctetString(const char* Value, const byte Type);
   ~OctetString();
   vector<byte> ValueToBytes(const char* Value);
 
@@ -98,12 +99,12 @@ public:
 private:
   static const byte m_StructType = 0x30;  // Sequence type in BER
 
-  BitString    m_Name;  //todo BitString czy OctetString?
-  BitString    m_F2;
-  Integer      m_F3;
-  Real         m_F4;
-  OctetString  m_F5;
-  Elem         m_F6;
+  OctetString m_Name;  //todo BitString czy OctetString?
+  OctetString m_F2;
+  Integer     m_F3;
+  Real        m_F4;
+  OctetString m_F5;
+  Elem        m_F6;
 
   const size_t m_NameLength  = 20;
   const size_t m_F2Length    = 30;

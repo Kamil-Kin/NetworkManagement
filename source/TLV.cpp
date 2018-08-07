@@ -128,6 +128,12 @@ OctetString::OctetString(const char* Value) :TLV(m_OctetStrType)
   encodeLength();
   encodeTLV();
 }
+OctetString::OctetString(const char* Value, const byte Type) :TLV(Type)
+{
+  m_Value = ValueToBytes(Value);
+  encodeLength();
+  encodeTLV();
+}
 OctetString::~OctetString() {}
 vector<byte> OctetString::ValueToBytes(const char* Value) 
 {
@@ -162,7 +168,7 @@ vector<byte> Elem::ValueToBytes(vector<int> Value)
 }
 
 Order::Order(string Name, string F2, int F3, float F4, string F5, vector<int> F6) :
-            TLV(m_StructType), m_Name(Name), m_F2(F2), m_F3(F3), m_F4(F4), m_F5(F5.c_str()), m_F6(F6)
+            TLV(m_StructType), m_Name(Name.c_str()), m_F2(F2.c_str()), m_F3(F3), m_F4(F4), m_F5(F5.c_str()), m_F6(F6)
 {//todo
   m_Value = OrderToBytes();
   encodeLength();
