@@ -1,10 +1,10 @@
-FN	:123 #
-SN	:456 #
-AD	:789 #
-AGE	:13 #
-Name	:kamil #
-F2	:f2f2f2f2 #
-F3	:30 #
+FN	:Eragon #
+SN	:Saphira #
+AD	:Arya #
+AGE	:23 #
+Name	:Alagaesia  #	20 znaków
+F2	:Tronjheim #	30 znaków
+F3	:30 #		wartoœæ ca³kowita 0-50	
 F4	:45.5 #
-F5	:kacper #
-F6	:1 2 3 4 5 #
+F5	:5 3 64 0 7 9 #
+F6	:1 2 3 4 5 36 27 15 #	60 znaków

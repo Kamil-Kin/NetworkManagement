@@ -35,13 +35,17 @@ void LoadFromFile()
     float f4       = stof(LoadLine(file));
     string f5      = LoadLine(file);
     vector<int> f6 = LoadElem(file);
-    //cout << fn << "\n" << sn << "\n" << ad << "\n" << age << "\n" << name << "\n"
-    //  << f2 << "\n" << f3 << "\n" << f4 << "\n" << f5 << "\n";
-    //for (int i = 0; i < f6.size(); ++i) 
-    //{
-    //  cout << f6.at(i) << " ";
-    //}
-    //cout << endl;
+    cout << fn << "\n";
+    cout << sn << "\n";
+    cout << ad << "\n";
+    cout << age << "\n";
+    cout << name << "\n";
+    cout << f2 << "\n" << f3 << "\n" << f4 << "\n" << f5 << "\n";
+    for (int i = 0; i < f6.size(); ++i) 
+    {
+      cout << f6.at(i) << " ";
+    }
+    cout << endl;
   }
   else cout << "Nie uzyskano dostepu do pliku\n";
 }
@@ -64,7 +68,7 @@ vector<int> LoadElem(ifstream& file)
   str.erase(0, str_begin + 1);  //cout << str << endl;
   do 
   {
-    cout << str << endl;
+    //cout << str << endl;
     size_t space = str.find_first_of(" ");
     substring.clear();
     substring = str.substr(0, space);
@@ -72,8 +76,7 @@ vector<int> LoadElem(ifstream& file)
     str.erase(0, space + 1);
   } 
   while (!str.empty());
-  for (size_t i = 0; i < val.size(); ++i)
-    cout << val[i] << " ";
+  //for (size_t i = 0; i < val.size(); ++i) cout << val[i] << " ";
   return val; //http://cpp.sh/3cueh
 }
 
@@ -88,3 +91,5 @@ vector<int> LoadElem(ifstream& file)
   }
   else cout << "Nie uzyskano dostepu do pliku\n";
 }
+ //for (int i = 0; i<data_length; ++i)
+ //  std::cout << std::hex << (int)data[i];

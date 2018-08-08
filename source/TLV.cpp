@@ -1,43 +1,44 @@
 #include "TLV.h"
 #include <cmath>
 #include <cassert>
-
+#include <string>
+#include <cstring>
 using std::ceil;
 using std::log;
 using std::pow;
 using std::memcpy;
+using std::hex;
 
 void TLV::encodeLength()
 {
-  byte NumBytesLength = m_Value.size();
+  size_t NumBytesLength = m_Value.size();
 
   if (NumBytesLength <= 127)
     m_Length.push_back(NumBytesLength);
   else 
   {
-    const int LongFormFlag = 0x80;  // 1000 0000
+    const int LongFormFlag = 0x80;  // b1000 0000
     
-    byte NumBitsInByte = 8;
-    byte LongFormLengthBytes = ceil(log2(NumBytesLength)/NumBitsInByte);
+    int NumBitsInByte = 8;
+    double LongFormLengthBytes = ceil(log2(NumBytesLength)/NumBitsInByte);
     
     m_Length.push_back(LongFormFlag + LongFormLengthBytes);
     
     double ValuesInByte = pow(2.0, NumBitsInByte);
     while (NumBytesLength > 0)
     {
-      byte ContentBytes = NumBytesLength bitand static_cast<byte>(ValuesInByte);
+      int ContentBytes = NumBytesLength bitand static_cast<int>(ValuesInByte);
       NumBytesLength /= ValuesInByte;
-      m_Length.push_back(ContentBytes);
+      m_Length.push_back(static_cast<byte>(ContentBytes));
     }
   }
 }
-
 void TLV::encodeTLV() 
 {
   m_Message.push_back(m_Type);
-  for (int i = 0; i < m_Length.size(); ++i)
+  for (size_t i = 0; i < m_Length.size(); ++i)
     m_Message.push_back(m_Length[i]);
-  for (int i = 0; i < m_Value.size(); ++i)
+  for (size_t i = 0; i < m_Value.size(); ++i)
     m_Message.push_back(m_Value[i]);
 }
 
@@ -55,9 +56,11 @@ vector<byte> Integer::ValueToBytes(int Value)
   char ValueTab[NumBytesInValue];
 
   memcpy(ValueTab, &Value, NumBytesInValue);
-
+ 
   for (byte i = 0; i < NumBytesInValue; ++i)
-    IntValue.push_back(ValueTab[i]);
+    if (ValueTab[i] != 0)
+      IntValue.push_back(ValueTab[i]);
+
   return IntValue;
 }
 
@@ -115,11 +118,13 @@ vector<byte> Real::ValueToBytes(float Value)
   vector<byte> RealValue;
   const byte NumBytesInValue = sizeof(Value);
   char ValueTab[NumBytesInValue];
-  
-  memcpy(ValueTab, &Value, NumBytesInValue);
+  int newValue = static_cast<int>(Value);//todo
+  memcpy(ValueTab, &newValue, NumBytesInValue);
 
   for (byte i = 0; i < NumBytesInValue; ++i)
-    RealValue.push_back(ValueTab[i]);
+    if (ValueTab[i] != 0)
+      RealValue.push_back(ValueTab[i]);
+
   return RealValue;
 }
 
@@ -139,13 +144,14 @@ OctetString::~OctetString() {}
 vector<byte> OctetString::ValueToBytes(const char* Value) 
 {
   vector<byte> OctetStrValue;
-  const byte NumBytesInValue = strlen(Value);
+  const size_t NumBytesInValue = strlen(Value);
   char* ValueTab = new char[NumBytesInValue];
 
   memcpy(ValueTab, Value, NumBytesInValue);
 
-  for (byte i = 0; i < NumBytesInValue; ++i)
+  for (size_t i = 0; i < NumBytesInValue; ++i)
     OctetStrValue.push_back(ValueTab[i]);
+
   return OctetStrValue;
 }
 
@@ -161,7 +167,7 @@ vector<byte> Elem::ValueToBytes(vector<int> Value)
   vector<byte> ElemValue;
   for (int i = 0; i < Value.size(); ++i) 
   {
-    Real temp = Real(i);
+    Integer temp = Integer(Value[i]);
     vector<byte> TempValue = temp.GetMessage();
     ElemValue.insert(ElemValue.end(), TempValue.begin(), TempValue.end());
   }
@@ -177,7 +183,6 @@ Order::Order(string Name, string F2, int F3, float F4, string F5, vector<int> F6
   encodeTLV();
 }
 Order::~Order() {}
-
 vector<byte> Order::OrderToBytes() 
 {
   vector<byte> OrderValue;
@@ -195,7 +200,7 @@ vector<byte> Order::OrderToBytes()
 void Order::AddToOrder(vector<byte> &OrderValue, vector<byte> &FieldValue)
 {
    OrderValue.insert(OrderValue.end(), FieldValue.begin(), FieldValue.end());
-   //return NameValue; http://cpp.sh/2knz
+   // http://cpp.sh/2knz
 }
 void Order::CheckSize(string Name, string f2, int f3, string f5) 
 {

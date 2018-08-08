@@ -2,17 +2,17 @@
 
 using std::ofstream;
 using std::ios;
+using std::hex;
+using std::stoi;
+using std::stof;
 
-Name::Name() :TLV(m_NameType)
+Name::Name() :TLV(m_NameType), m_FN(NULL), m_SN(NULL), m_AD(NULL), m_AGE(NULL), m_STRUCT(NULL)
 {
-  m_FN     = NULL;
-  m_SN     = NULL;
-  m_AD     = NULL;
-  m_AGE    = NULL;
-  m_STRUCT = NULL;
-
-  LoadValuesFromFile();
-
+  LoadValuesFromFile();  
+  
+  m_Value = ValueToBytes();
+  encodeLength();
+  encodeTLV();
 }
 Name::~Name() {}
 
@@ -66,10 +66,6 @@ void Name::LoadValuesFromFile()
   m_AD     = new OctetString(ad.c_str(), 0x6a);
   m_AGE    = new Integer(age);
   m_STRUCT = new Order(name, f2, f3, f4, f5, f6);
-
-  m_Value = ValueToBytes();
-  encodeLength();
-  encodeTLV();
 }
 
 string Name::LoadLine(ifstream& file)
@@ -81,38 +77,39 @@ string Name::LoadLine(ifstream& file)
   return str;
 }
 
-vector<int> LoadElem(ifstream& file)
+vector<int> Name::LoadElem(ifstream& file)
 {
   string str;
   string substring;
   vector<int> val;
-  getline(file, str, '#');  //cout << str << endl;
+  getline(file, str, '#');  //std::cout << str << std::endl;
   size_t str_begin = str.find_first_of(":");
-  str.erase(0, str_begin + 1);  //cout << str << endl;
+  str.erase(0, str_begin + 1);  //std::cout << str << std::endl;
   do
   {
     //std::cout << str << std::endl;
     size_t space = str.find_first_of(" ");
     substring.clear();
-    substring = str.substr(0, space);
+    substring = str.substr(0, space); //std::cout << substring << std::endl;
     val.push_back(stoi(substring));
-    str.erase(0, space + 1);
+    str.erase(0, space + 1);  //std::cout << str << std::endl;
   } while (!str.empty());
-  //for (size_t i = 0; i < val.size(); ++i)
-  //  std::cout << val[i] << " ";
-  return val; //http://cpp.sh/3cueh
+  //for (size_t i = 0; i < val.size(); ++i) std::cout << val[i] << ":"; //http://cpp.sh/3cueh
+  return val; 
 }
 
 void Name::SaveToFile() 
 {
   ofstream outfile;
-  outfile.open("BERMessage.txt", ios::out | ios::trunc);
+  outfile.open("BERMessage.txt");
 
   if (outfile.good() == true) 
-  { 
-    for (byte i = 0; i < m_Message.size(); ++i)
-      outfile << m_Message[i];
-
+  {
+    outfile.flush();
+    for (size_t i = 0; i < m_Message.size(); ++i)
+      outfile << hex << static_cast<int>(m_Message[i]) << " ";
+    for (size_t i = 0; i < m_Message.size(); ++i)
+      std::cout << hex << static_cast<int>(m_Message[i]) << " ";
     outfile.close(); 
   }
   else std::cout << "Nie uzyskano dostepu do pliku" << std::endl;

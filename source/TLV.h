@@ -94,8 +94,8 @@ public:
   Order(string Name, string F2, int F3, float F4, string F5, vector<int> F6);
   ~Order();
   vector<byte> OrderToBytes();
-  void         AddToOrder  (vector<byte> &Order, vector<byte> &Field);
-  void         CheckSize   (string Name, string f2, int f3, string f5);
+  void         AddToOrder(vector<byte> &Order, vector<byte> &Field);
+  void         CheckSize(string Name, string f2, int f3, string f5);
 private:
   static const byte m_StructType = 0x30;  // Sequence type in BER
 
@@ -110,7 +110,6 @@ private:
   const size_t m_F2Length    = 30;
   const int    m_F3LengthMin = 0;
   const int    m_F3LengthMax = 50;
-  //F4?
   const size_t m_F5Length    = 60;
 };
 

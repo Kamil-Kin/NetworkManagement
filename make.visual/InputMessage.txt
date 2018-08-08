@@ -1,0 +1,10 @@
+FN	:Eragon#
+SN	:Saphira#
+AD	:Arya#
+AGE	:23#
+Name	:Brom#
+F2	:Tronjheim#
+F3	:30#
+F4	:69.2#
+F5	:5,3,64,0,7,9#
+F6	:2 4 6 8 10 36 27 350 #
