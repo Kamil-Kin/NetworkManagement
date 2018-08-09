@@ -1,10 +1,10 @@
-FN	:Eragon#
-SN	:Saphira#
-AD	:Arya#
+FN	:Kamil#
+SN	:Kin#
+AD	:121#
 AGE	:23#
-Name	:Brom#
-F2	:Tronjheim#
-F3	:30#
-F4	:69.2#
-F5	:5,3,64,0,7,9#
+Name	:Consumer Electronics#	20 elements
+F2	:electromagnetic waves & fields#	30 elements
+F3	:30#	0-50 value
+F4	:45.6#
+F5	:Poznan UniversityOfTechnology Electronics&Telecommunications#	60 elements
 F6	:2 4 6 8 10 36 27 350 #

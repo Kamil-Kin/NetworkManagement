@@ -27,7 +27,6 @@ private:
   OctetString* m_AD;
   Integer*     m_AGE;
   Order*       m_STRUCT;
-
 };
 
 

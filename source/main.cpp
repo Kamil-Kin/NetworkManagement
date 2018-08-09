@@ -5,7 +5,6 @@ using std::cout;
 
 int main() 
 {
-
   Name* name = new Name();
   name->LoadValuesFromFile();
   name->SaveToFile();

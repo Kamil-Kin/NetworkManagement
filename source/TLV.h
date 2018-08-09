@@ -24,8 +24,7 @@ public:
   vector<byte> GetMessage  () { return m_Message; }
 
 protected:
-  const byte m_Type;
-
+  const byte   m_Type;
   vector<byte> m_Message;
   vector<byte> m_Length;
   vector<byte> m_Value;
@@ -44,7 +43,6 @@ private:
 
 class BitString :public TLV 
 {
-
 public:
   BitString(string Value);
   ~BitString();
@@ -96,6 +94,7 @@ public:
   vector<byte> OrderToBytes();
   void         AddToOrder(vector<byte> &Order, vector<byte> &Field);
   void         CheckSize(string Name, string f2, int f3, string f5);
+
 private:
   static const byte m_StructType = 0x30;  // Sequence type in BER
 
@@ -106,11 +105,11 @@ private:
   OctetString m_F5;
   Elem        m_F6;
 
-  const size_t m_NameLength  = 20;
-  const size_t m_F2Length    = 30;
-  const int    m_F3LengthMin = 0;
-  const int    m_F3LengthMax = 50;
-  const size_t m_F5Length    = 60;
+  const size_t m_NameLength = 20;
+  const size_t m_F2Length   = 30;
+  const int    m_F3ValueMin = 0;
+  const int    m_F3ValueMax = 50;
+  const size_t m_F5Length   = 60;
 };
 
 

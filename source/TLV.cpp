@@ -3,6 +3,7 @@
 #include <cassert>
 #include <string>
 #include <cstring>
+
 using std::ceil;
 using std::log;
 using std::pow;
@@ -20,15 +21,15 @@ void TLV::encodeLength()
     const int LongFormFlag = 0x80;  // b1000 0000
     
     int NumBitsInByte = 8;
+    int MaxValueInByte = 255;
     double LongFormLengthBytes = ceil(log2(NumBytesLength)/NumBitsInByte);
     
     m_Length.push_back(LongFormFlag + LongFormLengthBytes);
     
-    double ValuesInByte = pow(2.0, NumBitsInByte);
     while (NumBytesLength > 0)
     {
-      int ContentBytes = NumBytesLength bitand static_cast<int>(ValuesInByte);
-      NumBytesLength /= ValuesInByte;
+      int ContentBytes = NumBytesLength & MaxValueInByte;
+      NumBytesLength /= MaxValueInByte;
       m_Length.push_back(static_cast<byte>(ContentBytes));
     }
   }
@@ -118,8 +119,7 @@ vector<byte> Real::ValueToBytes(float Value)
   vector<byte> RealValue;
   const byte NumBytesInValue = sizeof(Value);
   char ValueTab[NumBytesInValue];
-  int newValue = static_cast<int>(Value);//todo
-  memcpy(ValueTab, &newValue, NumBytesInValue);
+  memcpy(ValueTab, &Value, NumBytesInValue);
 
   for (byte i = 0; i < NumBytesInValue; ++i)
     if (ValueTab[i] != 0)
@@ -177,7 +177,7 @@ vector<byte> Elem::ValueToBytes(vector<int> Value)
 Order::Order(string Name, string F2, int F3, float F4, string F5, vector<int> F6) :
             TLV(m_StructType), m_Name(Name.c_str()), m_F2(F2.c_str()), m_F3(F3), m_F4(F4), m_F5(F5.c_str()), m_F6(F6)
 {
-  //CheckSize(Name, F2, F3, F5);//todo
+  CheckSize(Name, F2, F3, F5);
   m_Value = OrderToBytes();
   encodeLength();
   encodeTLV();
@@ -200,16 +200,12 @@ vector<byte> Order::OrderToBytes()
 void Order::AddToOrder(vector<byte> &OrderValue, vector<byte> &FieldValue)
 {
    OrderValue.insert(OrderValue.end(), FieldValue.begin(), FieldValue.end());
-   // http://cpp.sh/2knz
 }
 void Order::CheckSize(string Name, string f2, int f3, string f5) 
 {
-  assert 
-  (
-    Name.size() == m_NameLength 
-    || f2.size() == m_F2Length 
-    || f3 <= m_F3LengthMax 
-    || f3 >= m_F3LengthMin 
-    || f5.size() == m_F5Length
-  );
+  assert(Name.size() == m_NameLength);
+  assert(f2.size() == m_F2Length);
+  assert(f3 <= m_F3ValueMax);
+  assert(f3 >= m_F3ValueMin);
+  assert(f5.size() == m_F5Length);
 }
