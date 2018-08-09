@@ -1,9 +1,0 @@
-/bin
-/make.visual/x64
-
-/make.visual/.vs
-/FileOps/x64
-/.vs
-/x64
-/FileOps
-/source/BitString.cpp
