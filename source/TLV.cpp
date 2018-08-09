@@ -8,7 +8,6 @@ using std::ceil;
 using std::log;
 using std::pow;
 using std::memcpy;
-using std::hex;
 
 void TLV::encodeLength()
 {
@@ -21,14 +20,14 @@ void TLV::encodeLength()
     const int LongFormFlag = 0x80;  // b1000 0000
     
     int NumBitsInByte = 8;
-    int MaxValueInByte = 255;
+    double MaxValueInByte = pow(2.0, NumBitsInByte) - 1;
     double LongFormLengthBytes = ceil(log2(NumBytesLength)/NumBitsInByte);
     
     m_Length.push_back(LongFormFlag + LongFormLengthBytes);
     
     while (NumBytesLength > 0)
     {
-      int ContentBytes = NumBytesLength & MaxValueInByte;
+      int ContentBytes = NumBytesLength & static_cast<int>(MaxValueInByte);
       NumBytesLength /= MaxValueInByte;
       m_Length.push_back(static_cast<byte>(ContentBytes));
     }
@@ -58,53 +57,12 @@ vector<byte> Integer::ValueToBytes(int Value)
 
   memcpy(ValueTab, &Value, NumBytesInValue);
  
-  for (byte i = 0; i < NumBytesInValue; ++i)
+  //for (int i = 0; i < NumBytesInValue; ++i)
+  for (int i = NumBytesInValue - 1; i >= 0; --i)
     if (ValueTab[i] != 0)
       IntValue.push_back(ValueTab[i]);
 
   return IntValue;
-}
-
-BitString::BitString(string Value) :TLV(m_BitStrType)
-{
-  m_Value = ValueToBytes(Value);
-  encodeLength();
-  encodeTLV();
-}
-BitString::~BitString() {}
-vector<byte> BitString::ValueToBytes(string Value) 
-{
-  vector<byte> BitStrValue;
-
-  const byte NumBitsInByte = 8;
-  byte NumBytesInValue = ceil(Value.size() / NumBitsInByte);
-  
-  string str0 = "0";
-  string str1 = "1";
-  string str_ = "23456789";
-
-  size_t first_ = Value.find_first_of(str_);
-  size_t last_ = Value.find_last_of(str_);
-
-  do
-  {
-    first_ = Value.find_first_of(str_);
-    Value.replace(first_, str1.length(), str1);
-  } while (first_ < last_);
-
-  //cpp.sh/3hson
-  for (byte i = 0; i < NumBytesInValue; ++i) 
-  {
-    byte tmpVal = 0;
-    for (byte j = NumBitsInByte - 1; j >= 0; --j)
-    {
-      int ValueOfBit = Value[i * NumBitsInByte + (NumBitsInByte - 1 - j)] bitand 0xFF;
-      tmpVal += ValueOfBit * pow(2.0, j);
-    }
-    BitStrValue.push_back(tmpVal);
-  }
-
-  return BitStrValue;
 }
 
 Real::Real(float Value) :TLV(m_RealType) 
@@ -121,7 +79,8 @@ vector<byte> Real::ValueToBytes(float Value)
   char ValueTab[NumBytesInValue];
   memcpy(ValueTab, &Value, NumBytesInValue);
 
-  for (byte i = 0; i < NumBytesInValue; ++i)
+  //for (byte i = 0; i < NumBytesInValue; ++i)
+  for (int i = NumBytesInValue - 1; i >= 0; --i)
     if (ValueTab[i] != 0)
       RealValue.push_back(ValueTab[i]);
 

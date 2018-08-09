@@ -41,17 +41,6 @@ private:
   static const byte m_IntType = 0x02;  // Integer type in BER
 };
 
-class BitString :public TLV 
-{
-public:
-  BitString(string Value);
-  ~BitString();
-  vector<byte> ValueToBytes(string Value);
-
-private:
-  static const byte m_BitStrType = 0x03;  // BitString type in BER
-};
-
 class OctetString :public TLV
 {
 public:
@@ -98,7 +87,7 @@ public:
 private:
   static const byte m_StructType = 0x30;  // Sequence type in BER
 
-  OctetString m_Name;  //todo BitString czy OctetString?
+  OctetString m_Name;
   OctetString m_F2;
   Integer     m_F3;
   Real        m_F4;

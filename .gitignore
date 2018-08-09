@@ -6,3 +6,4 @@
 /.vs
 /x64
 /FileOps
+/source/BitString.cpp
