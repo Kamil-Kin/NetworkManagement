@@ -1,15 +1,16 @@
 #include "Name.h"
-
+#include <sstream>
 using std::ofstream;
 using std::ios;
 using std::hex;
 using std::stoi;
 using std::stof;
 
-Name::Name() :TLV(m_NameType), m_FN(NULL), m_SN(NULL), m_AD(NULL), m_AGE(NULL), m_STRUCT(NULL)
+Name::Name() :TLV(m_NameType), m_FN(NULL), m_SN(NULL), m_AD(NULL), m_AGE(NULL), m_STRUCT(NULL) 
 {
-  LoadValuesFromFile();  
-  
+  DisplayValues();
+  LoadValuesFromFile();
+
   m_Value = ValueToBytes();
   encodeLength();
   encodeTLV();
@@ -68,33 +69,32 @@ void Name::LoadValuesFromFile()
   m_STRUCT = new Order(name, f2, f3, f4, f5, f6);
 }
 
-string Name::LoadLine(ifstream& file)
+string Name::LoadLine(ifstream& file) 
 {
   string str;
-  getline(file, str, '#');  //cout << str << endl;
+  getline(file, str, '#');
   size_t str_begin = str.find_first_of(":");
-  str.erase(0, str_begin + 1);  //cout << str << endl;
+  str.erase(0, str_begin + 1);
   return str;
 }
 
-vector<int> Name::LoadElem(ifstream& file)
+vector<int> Name::LoadElem(ifstream& file) 
 {
   string str;
   string substring;
   vector<int> val;
-  getline(file, str, '#');  //std::cout << str << std::endl;
+  getline(file, str, '#');
   size_t str_begin = str.find_first_of(":");
-  str.erase(0, str_begin + 1);  //std::cout << str << std::endl;
-  do
+  str.erase(0, str_begin + 1);
+  do 
   {
-    //std::cout << str << std::endl;
     size_t space = str.find_first_of(" ");
     substring.clear();
-    substring = str.substr(0, space); //std::cout << substring << std::endl;
+    substring = str.substr(0, space);
     val.push_back(stoi(substring));
-    str.erase(0, space + 1);  //std::cout << str << std::endl;
+    str.erase(0, space + 1);
   } while (!str.empty());
-  //for (size_t i = 0; i < val.size(); ++i) std::cout << val[i] << ":"; //http://cpp.sh/3cueh
+
   return val; 
 }
 
@@ -111,6 +111,23 @@ void Name::SaveToFile()
     for (size_t i = 0; i < m_Message.size(); ++i)
       std::cout << hex << static_cast<int>(m_Message[i]) << " ";
     outfile.close(); 
+  }
+  else std::cout << "Nie uzyskano dostepu do pliku" << std::endl;
+}
+
+void Name::DisplayValues() 
+{
+  ifstream infile;
+  std::stringstream buffer;
+
+  infile.open("InputMessage.txt");
+  if (infile.good() == true)
+  {
+    buffer << infile.rdbuf();
+    string file = buffer.str();
+    std::cout << file << std::endl;
+
+    infile.close();
   }
   else std::cout << "Nie uzyskano dostepu do pliku" << std::endl;
 }

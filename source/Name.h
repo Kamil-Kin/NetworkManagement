@@ -18,7 +18,7 @@ public:
   string       LoadLine(ifstream& file);
   vector<int>  LoadElem(ifstream& file);
   void         SaveToFile();
-
+  void         DisplayValues();
 private:
   static const byte m_NameType = 0x30;  // Sequence type in BER
 

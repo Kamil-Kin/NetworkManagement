@@ -9,7 +9,7 @@ using std::log;
 using std::pow;
 using std::memcpy;
 
-void TLV::encodeLength()
+void TLV::encodeLength() 
 {
   size_t NumBytesLength = m_Value.size();
 
@@ -57,7 +57,6 @@ vector<byte> Integer::ValueToBytes(int Value)
 
   memcpy(ValueTab, &Value, NumBytesInValue);
  
-  //for (int i = 0; i < NumBytesInValue; ++i)
   for (int i = NumBytesInValue - 1; i >= 0; --i)
     if (ValueTab[i] != 0)
       IntValue.push_back(ValueTab[i]);
@@ -79,7 +78,6 @@ vector<byte> Real::ValueToBytes(float Value)
   char ValueTab[NumBytesInValue];
   memcpy(ValueTab, &Value, NumBytesInValue);
 
-  //for (byte i = 0; i < NumBytesInValue; ++i)
   for (int i = NumBytesInValue - 1; i >= 0; --i)
     if (ValueTab[i] != 0)
       RealValue.push_back(ValueTab[i]);
@@ -93,7 +91,7 @@ OctetString::OctetString(const char* Value) :TLV(m_OctetStrType)
   encodeLength();
   encodeTLV();
 }
-OctetString::OctetString(const char* Value, const byte Type) :TLV(Type)
+OctetString::OctetString(const char* Value, const byte Type) :TLV(Type) 
 {
   m_Value = ValueToBytes(Value);
   encodeLength();
@@ -121,7 +119,7 @@ Elem::Elem(vector<int> Value) :TLV(m_ElemType)
   encodeTLV();
 }
 Elem::~Elem() {}
-vector<byte> Elem::ValueToBytes(vector<int> Value)
+vector<byte> Elem::ValueToBytes(vector<int> Value) 
 {
   vector<byte> ElemValue;
   for (int i = 0; i < Value.size(); ++i) 
@@ -134,7 +132,7 @@ vector<byte> Elem::ValueToBytes(vector<int> Value)
 }
 
 Order::Order(string Name, string F2, int F3, float F4, string F5, vector<int> F6) :
-            TLV(m_StructType), m_Name(Name.c_str()), m_F2(F2.c_str()), m_F3(F3), m_F4(F4), m_F5(F5.c_str()), m_F6(F6)
+  TLV(m_StructType), m_Name(Name.c_str()), m_F2(F2.c_str()), m_F3(F3), m_F4(F4), m_F5(F5.c_str()), m_F6(F6) 
 {
   CheckSize(Name, F2, F3, F5);
   m_Value = OrderToBytes();
@@ -156,7 +154,7 @@ vector<byte> Order::OrderToBytes()
 
   return OrderValue;
 }
-void Order::AddToOrder(vector<byte> &OrderValue, vector<byte> &FieldValue)
+void Order::AddToOrder(vector<byte> &OrderValue, vector<byte> &FieldValue) 
 {
    OrderValue.insert(OrderValue.end(), FieldValue.begin(), FieldValue.end());
 }
